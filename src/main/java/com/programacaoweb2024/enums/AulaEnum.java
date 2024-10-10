@@ -6,13 +6,13 @@ public enum AulaEnum {
     PREPARACAO_CAMPEONATO("PreparaÃ§ao para campeonato"),
     COMPLETA("Completa");
 
-    private final String tipoEvento;
+    private final String tipoAula;
 
-    AulaEnum(String tipoEvento) {
-        this.tipoEvento = tipoEvento;
+    AulaEnum(String tipoAula) {
+        this.tipoAula = tipoAula;
     }
 
-    public String getTipoEvento(){
-        return tipoEvento;
+    public String getTipoAula(){
+        return tipoAula;
     }
 }
