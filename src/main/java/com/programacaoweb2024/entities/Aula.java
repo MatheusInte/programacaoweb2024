@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -22,5 +23,6 @@ public class Aula {
     private LocalDate data;
     @Enumerated(EnumType.STRING)
     private AulaEnum tipoDeAula;
-
+    @OneToMany(mappedBy = "aula", cascade = CascadeType.ALL)
+    private List<Exercicio> exercicios;
 }

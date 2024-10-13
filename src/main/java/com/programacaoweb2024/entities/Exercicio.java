@@ -17,6 +17,9 @@ public class Exercicio {
     private Long id;
     private String tipoDeExercicio;
     private String execucao;
+    @ManyToOne
+    @JoinColumn(name = "aula_id")
+    private Aula aula;
     @Enumerated(EnumType.STRING)
     private ExercicioEnum grupamento;
 }
