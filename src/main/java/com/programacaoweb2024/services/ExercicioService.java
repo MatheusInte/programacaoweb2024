@@ -8,5 +8,6 @@ public interface ExercicioService {
     public List<Exercicio> listarExercicios();
     public Exercicio buscarExercicioPorId(Long id);
     public Exercicio cadastrarExercicio(Exercicio exercicio);
+    public Exercicio atualizarExercicio(Long id, Exercicio exercicio);
     public void deletarExercicio(Long id);
 }

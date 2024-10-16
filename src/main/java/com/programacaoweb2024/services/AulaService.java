@@ -8,5 +8,6 @@ public interface AulaService {
     public List<Aula> listarAulas();
     public Aula buscarAulaPorId(Long id);
     public Aula cadastrarAula(Aula aula);
+    public Aula atualizarAula(Long id, Aula aula);
     public void deletarAula(Long id);
 }

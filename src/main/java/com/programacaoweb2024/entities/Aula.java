@@ -23,6 +23,6 @@ public class Aula {
     private LocalDate data;
     @Enumerated(EnumType.STRING)
     private AulaEnum tipoDeAula;
-    @OneToMany(mappedBy = "aula", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "aula")
     private List<Exercicio> exercicios;
 }
