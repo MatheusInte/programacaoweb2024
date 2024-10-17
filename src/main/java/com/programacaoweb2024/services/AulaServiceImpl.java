@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AulaServiceImpl implements AulaService{
@@ -20,7 +21,8 @@ public class AulaServiceImpl implements AulaService{
 
     @Override
     public Aula buscarAulaPorId(Long id) {
-        return aulaRepository.findById(id).orElse(null);
+        Optional<Aula> obj = aulaRepository.findById(id);
+        return obj.orElse(null);
     }
 
     @Override

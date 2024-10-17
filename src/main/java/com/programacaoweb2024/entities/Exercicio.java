@@ -1,5 +1,6 @@
 package com.programacaoweb2024.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.programacaoweb2024.enums.ExercicioEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,9 +18,11 @@ public class Exercicio {
     private Long id;
     private String tipoDeExercicio;
     private String execucao;
-    @ManyToOne
-    @JoinColumn(name = "aula_id")
-    private Aula aula;
     @Enumerated(EnumType.STRING)
     private ExercicioEnum grupamento;
+    @ManyToOne
+    @JoinColumn(name = "aula_id")
+    @JsonIgnore
+    private Aula aula;
+
 }
