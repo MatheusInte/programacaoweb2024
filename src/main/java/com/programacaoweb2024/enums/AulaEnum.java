@@ -3,7 +3,7 @@ package com.programacaoweb2024.enums;
 public enum AulaEnum {
     CARDIO("Cardio"),
     LUTA("Luta"),
-    PREPARACAO_CAMPEONATO("PreparaÃ§ao para campeonato"),
+    PREPARACAO_CAMPEONATO("Preparacao para campeonato"),
     COMPLETA("Completa");
 
     private final String tipoAula;

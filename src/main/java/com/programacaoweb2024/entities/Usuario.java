@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -21,4 +22,6 @@ public class Usuario {
     private String endereco;
     @Enumerated(EnumType.STRING)
     private UsuarioEnum experiencia;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Aula> aulas;
 }

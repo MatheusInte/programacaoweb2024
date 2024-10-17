@@ -5,13 +5,13 @@ public enum ExercicioEnum {
     DUPLA("Dupla"),
     GRUPO("Grupo");
 
-    private final String tipoExercicio;
+    private final String grupamento;
 
-    ExercicioEnum(String tipoExercicio){
-        this.tipoExercicio = tipoExercicio;
+    ExercicioEnum(String grupamento){
+        this.grupamento = grupamento;
     }
 
-    private String getTipoExercicio(){
-        return tipoExercicio;
+    private String getGrupamento(){
+        return grupamento;
     }
 }

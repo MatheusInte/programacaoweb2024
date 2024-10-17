@@ -25,4 +25,7 @@ public class Aula {
     private AulaEnum tipoDeAula;
     @OneToMany(mappedBy = "aula", cascade = CascadeType.ALL)
     private List<Exercicio> exercicios;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }
