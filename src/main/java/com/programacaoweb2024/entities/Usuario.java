@@ -21,6 +21,8 @@ public class Usuario {
     private String nome;
     private LocalDate dataDeNascimento;
     private String endereco;
+    private String email;
+    private String password;
     @Enumerated(EnumType.STRING)
     private UsuarioEnum experiencia;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
