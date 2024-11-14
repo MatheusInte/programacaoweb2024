@@ -5,15 +5,19 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +25,21 @@ public class Usuario {
     private String nome;
     private LocalDate dataDeNascimento;
     private String endereco;
+    private String email;
+    private String password;
     @Enumerated(EnumType.STRING)
     private UsuarioEnum experiencia;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Aula> aulas;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 }

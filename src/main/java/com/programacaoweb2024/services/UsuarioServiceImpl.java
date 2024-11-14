@@ -44,7 +44,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     private UsuarioDTO converterParaDTO(Usuario usuario){
         return new UsuarioDTO(usuario.getNome(), usuario.getDataDeNascimento(),
-                usuario.getEndereco(), usuario.getExperiencia(), usuario.getAulas());
+                usuario.getEndereco(),usuario.getEmail(),usuario.getPassword(), usuario.getExperiencia(), usuario.getAulas());
     }
 
     private Usuario converterParaEntidade(UsuarioDTO usuarioDTO){
@@ -53,6 +53,8 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuario.setNome(usuarioDTO.getNome());
         usuario.setDataDeNascimento(usuarioDTO.getDataDeNascimento());
         usuario.setEndereco(usuarioDTO.getEndereco());
+        usuario.setEmail(usuario.getEmail());
+        usuario.setPassword(usuario.getPassword());
         usuario.setExperiencia(usuarioDTO.getExperiencia());
         usuario.setAulas(usuarioDTO.getAulas());
 

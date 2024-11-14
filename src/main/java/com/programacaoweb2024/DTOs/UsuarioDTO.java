@@ -16,6 +16,8 @@ public class UsuarioDTO {
     private String nome;
     private LocalDate dataDeNascimento;
     private String endereco;
+    private String email;
+    private String password;
     private UsuarioEnum experiencia;
     private List<Aula> aulas;
 }
