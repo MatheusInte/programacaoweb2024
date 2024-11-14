@@ -1,12 +1,13 @@
 package com.programacaoweb2024.services;
 
+import com.programacaoweb2024.DTOs.AulaDTO;
 import com.programacaoweb2024.entities.Aula;
 
 import java.util.List;
 
 public interface AulaService {
-    public List<Aula> listarAulas();
+    public List<AulaDTO> listarAulas();
     public Aula buscarAulaPorId(Long id);
-    public Aula cadastrarAula(Aula aula);
+    public AulaDTO cadastrarAula(AulaDTO aulaDTO);
     public void deletarAula(Long id);
 }

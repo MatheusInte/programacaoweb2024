@@ -1,7 +1,7 @@
-package com.programacaoweb2024.entities;
+package com.programacaoweb2024.DTOs;
 
+import com.programacaoweb2024.entities.Aula;
 import com.programacaoweb2024.enums.UsuarioEnum;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -9,20 +9,13 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Data
-@Entity
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UsuarioDTO {
     private String nome;
     private LocalDate dataDeNascimento;
     private String endereco;
-    @Enumerated(EnumType.STRING)
     private UsuarioEnum experiencia;
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Aula> aulas;
 }
