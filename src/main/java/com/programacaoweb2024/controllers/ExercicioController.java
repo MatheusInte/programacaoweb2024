@@ -1,5 +1,6 @@
 package com.programacaoweb2024.controllers;
 
+import com.programacaoweb2024.DTOs.ExercicioDTO;
 import com.programacaoweb2024.entities.Exercicio;
 import com.programacaoweb2024.services.ExercicioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class ExercicioController {
     ExercicioService exercicioService;
 
     @GetMapping
-    public ResponseEntity<List<Exercicio>> listarExercicios(){
-        List<Exercicio> exercicios = exercicioService.listarExercicios();
+    public ResponseEntity<List<ExercicioDTO>> listarExercicios(){
+        List<ExercicioDTO> exercicios = exercicioService.listarExercicios();
         return ResponseEntity.ok().body(exercicios);
     }
 
@@ -28,9 +29,9 @@ public class ExercicioController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Exercicio> cadastrarExercicio(@RequestBody Exercicio exercicio){
+    public ResponseEntity<ExercicioDTO> cadastrarExercicio(@RequestBody ExercicioDTO exercicioDTO){
         try{
-            Exercicio exercicioCadastrado = exercicioService.cadastrarExercicio(exercicio);
+            ExercicioDTO exercicioCadastrado = exercicioService.cadastrarExercicio(exercicioDTO);
             return ResponseEntity.ok().body(exercicioCadastrado);
         } catch (Exception e) {
             throw new RuntimeException(e);

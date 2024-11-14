@@ -1,5 +1,6 @@
 package com.programacaoweb2024.controllers;
 
+import com.programacaoweb2024.DTOs.AulaDTO;
 import com.programacaoweb2024.entities.Aula;
 import com.programacaoweb2024.services.AulaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class AulaController {
     AulaService aulaService;
 
     @GetMapping
-    public ResponseEntity <List<Aula>> listarAulas(){
-        List<Aula> aulas = aulaService.listarAulas();
+    public ResponseEntity <List<AulaDTO>> listarAulas(){
+        List<AulaDTO> aulas = aulaService.listarAulas();
         return ResponseEntity.ok().body(aulas);
     }
 
@@ -28,9 +29,9 @@ public class AulaController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Aula> cadastrarAula(@RequestBody Aula aula){
+    public ResponseEntity<AulaDTO> cadastrarAula(@RequestBody AulaDTO aulaDTO){
         try{
-            Aula aulaCadastrada = aulaService.cadastrarAula(aula);
+            AulaDTO aulaCadastrada = aulaService.cadastrarAula(aulaDTO);
             return ResponseEntity.ok().body(aulaCadastrada);
         } catch (Exception e) {
             throw new RuntimeException(e);

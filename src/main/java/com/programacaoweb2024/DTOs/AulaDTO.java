@@ -1,8 +1,8 @@
-package com.programacaoweb2024.entities;
+package com.programacaoweb2024.DTOs;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.programacaoweb2024.entities.Exercicio;
+import com.programacaoweb2024.entities.Usuario;
 import com.programacaoweb2024.enums.AulaEnum;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -10,23 +10,14 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Data
-@Entity
-public class Aula {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class AulaDTO {
     private String titulo;
     private String descricao;
     private LocalDate data;
-    @Enumerated(EnumType.STRING)
     private AulaEnum tipoDeAula;
-    @OneToMany(mappedBy = "aula", cascade = CascadeType.ALL)
     private List<Exercicio> exercicios;
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 }

@@ -22,7 +22,7 @@ public class Exercicio {
     private ExercicioEnum grupamento;
     @ManyToOne
     @JoinColumn(name = "aula_id")
-    @JsonIgnore
+
     private Aula aula;
 
 }
