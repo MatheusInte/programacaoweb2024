@@ -22,7 +22,6 @@ public class Exercicio {
     private ExercicioEnum grupamento;
     @ManyToOne
     @JoinColumn(name = "aula_id")
-
     private Aula aula;
 
 }

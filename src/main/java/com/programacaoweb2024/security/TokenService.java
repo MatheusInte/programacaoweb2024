@@ -35,19 +35,22 @@ public class TokenService {
 
     public String validateToken(String token){
         try{
+            System.out.println(token);
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.require(algorithm)
+            String sub = JWT.require(algorithm)
                     .withIssuer("login-auth-api")
                     .build()
                     .verify(token)
                     .getSubject();
+            System.out.println(sub);
+            return sub;
         } catch(JWTVerificationException exception){
             return null;
         }
     }
 
     private Instant generateExpirationDate(){
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusHours(4).toInstant(ZoneOffset.of("-03:00"));
     }
 
 }
