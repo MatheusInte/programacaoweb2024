@@ -1,9 +1,12 @@
 package com.programacaoweb2024.controllers;
 
-import com.programacaoweb2024.DTOs.ExercicioDTO;
+import com.programacaoweb2024.DTOs.ExercicioRequestDTO;
+import com.programacaoweb2024.DTOs.ExercicioResponseDTO;
 import com.programacaoweb2024.entities.Exercicio;
 import com.programacaoweb2024.services.ExercicioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,22 +20,21 @@ public class ExercicioController {
     ExercicioService exercicioService;
 
     @GetMapping
-    public ResponseEntity<List<ExercicioDTO>> listarExercicios(){
-        List<ExercicioDTO> exercicios = exercicioService.listarExercicios();
-        return ResponseEntity.ok().body(exercicios);
+    public ResponseEntity<List<ExercicioResponseDTO>> listarExercicios(){
+        return ResponseEntity.ok(exercicioService.listarExercicios());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Exercicio> buscarExercicioPorId(@PathVariable Long id){
-        Exercicio obj = exercicioService.buscarExercicioPorId(id);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<ExercicioResponseDTO> buscarExercicioPorId(@PathVariable Long id){
+        ExercicioResponseDTO exercicio = exercicioService.buscarExercicioPorId(id);
+        return ResponseEntity.ok(exercicio);
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<ExercicioDTO> cadastrarExercicio(@RequestBody ExercicioDTO exercicioDTO){
+    public ResponseEntity<ExercicioResponseDTO> cadastrarExercicio(@RequestBody @Valid ExercicioRequestDTO exercicioRequestDTO){
         try{
-            ExercicioDTO exercicioCadastrado = exercicioService.cadastrarExercicio(exercicioDTO);
-            return ResponseEntity.ok().body(exercicioCadastrado);
+            ExercicioResponseDTO exercicioCadastrado = exercicioService.cadastrarExercicio(exercicioRequestDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(exercicioCadastrado);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,7 +39,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioRequestDTO.nome());
-        usuario.setDataDeNascimento((usuarioRequestDTO.dataDeNascimento()));
+        usuario.setDataDeNascimento(usuarioRequestDTO.dataDeNascimento());
         usuario.setEndereco(usuarioRequestDTO.endereco());
         usuario.setEmail(usuarioRequestDTO.email());
         usuario.setPassword(usuarioRequestDTO.password());

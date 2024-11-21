@@ -16,8 +16,8 @@ public class Exercicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String tipoDeExercicio;
-    private String execucao;
+    private String nomeExercicio;
+    private String equipamento;
     @Enumerated(EnumType.STRING)
     private ExercicioEnum grupamento;
     @ManyToOne
