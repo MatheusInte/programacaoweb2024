@@ -1,6 +1,7 @@
 package com.programacaoweb2024.services;
 
-import com.programacaoweb2024.DTOs.UsuarioDTO;
+import com.programacaoweb2024.DTOs.UsuarioRequestDTO;
+import com.programacaoweb2024.DTOs.UsuarioResponseDTO;
 import com.programacaoweb2024.entities.Usuario;
 import com.programacaoweb2024.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,47 +18,41 @@ public class UsuarioServiceImpl implements UsuarioService{
     UsuarioRepository usuarioRepository;
 
     @Override
-    public List<UsuarioDTO> listarUsuarios() {
-        return usuarioRepository.findAll().stream()
-                .map(this::converterParaDTO)
+    public List<UsuarioResponseDTO> listarUsuarios() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return usuarios.stream()
+                .map(UsuarioResponseDTO::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Usuario buscarUsuarioPorId(Long id) {
-        Optional<Usuario> obj = usuarioRepository.findById(id);
-        return obj.orElse(null);
+    public UsuarioResponseDTO buscarUsuarioPorId(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        return new UsuarioResponseDTO(usuario);
     }
 
     @Override
-    public UsuarioDTO cadastrarUsuario(UsuarioDTO usuarioDTO) {
-        Usuario usuario = converterParaEntidade(usuarioDTO);
-        usuario = usuarioRepository.save(usuario);
+    public UsuarioResponseDTO cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
+        if (usuarioRepository.existsByemail(usuarioRequestDTO.email())){
+            throw new IllegalArgumentException("O email já está em uso");
+        }
 
-        return converterParaDTO(usuario);
+        Usuario usuario = new Usuario();
+        usuario.setNome(usuarioRequestDTO.nome());
+        usuario.setDataDeNascimento((usuarioRequestDTO.dataDeNascimento()));
+        usuario.setEndereco(usuarioRequestDTO.endereco());
+        usuario.setEmail(usuarioRequestDTO.email());
+        usuario.setPassword(usuarioRequestDTO.password());
+        usuario.setExperiencia(usuarioRequestDTO.experiencia());
+
+        Usuario usuarioSalvo = usuarioRepository.save(usuario);
+
+        return new UsuarioResponseDTO(usuarioSalvo);
     }
 
     @Override
     public void deletarUsuario(Long id) {
         usuarioRepository.deleteById(id);
-    }
-
-    private UsuarioDTO converterParaDTO(Usuario usuario){
-        return new UsuarioDTO(usuario.getNome(), usuario.getDataDeNascimento(),
-                usuario.getEndereco(),usuario.getEmail(),usuario.getPassword(), usuario.getExperiencia(), usuario.getAulas());
-    }
-
-    private Usuario converterParaEntidade(UsuarioDTO usuarioDTO){
-        Usuario usuario = new Usuario();
-
-        usuario.setNome(usuarioDTO.getNome());
-        usuario.setDataDeNascimento(usuarioDTO.getDataDeNascimento());
-        usuario.setEndereco(usuarioDTO.getEndereco());
-        usuario.setEmail(usuario.getEmail());
-        usuario.setPassword(usuario.getPassword());
-        usuario.setExperiencia(usuarioDTO.getExperiencia());
-        usuario.setAulas(usuarioDTO.getAulas());
-
-        return usuario;
     }
 }

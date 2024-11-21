@@ -1,9 +1,13 @@
 package com.programacaoweb2024.controllers;
 
 import com.programacaoweb2024.DTOs.UsuarioDTO;
+import com.programacaoweb2024.DTOs.UsuarioRequestDTO;
+import com.programacaoweb2024.DTOs.UsuarioResponseDTO;
 import com.programacaoweb2024.entities.Usuario;
 import com.programacaoweb2024.services.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,22 +22,21 @@ public class UsuarioController {
 
     
     @GetMapping
-    public ResponseEntity <List<UsuarioDTO>> listarUsuarios(){
-        List<UsuarioDTO> usuarios = usuarioService.listarUsuarios();
-        return ResponseEntity.ok().body(usuarios);
+    public ResponseEntity <List<UsuarioResponseDTO>> listarUsuarios(){
+        return ResponseEntity.ok(usuarioService.listarUsuarios());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long id){
-        Usuario obj = usuarioService.buscarUsuarioPorId(id);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable Long id){
+        UsuarioResponseDTO usuario = usuarioService.buscarUsuarioPorId(id);
+        return ResponseEntity.ok(usuario);
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<UsuarioDTO> cadastrarUsuario(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<UsuarioResponseDTO> cadastrarUsuario(@RequestBody @Valid UsuarioRequestDTO usuarioRequestDTO){
         try{
-            UsuarioDTO usuarioCadastrado = usuarioService.cadastrarUsuario(usuarioDTO);
-            return ResponseEntity.ok().body(usuarioCadastrado);
+            UsuarioResponseDTO usuarioCadastrado = usuarioService.cadastrarUsuario(usuarioRequestDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCadastrado);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

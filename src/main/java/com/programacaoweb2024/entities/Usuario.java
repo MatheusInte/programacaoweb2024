@@ -25,6 +25,7 @@ public class Usuario implements UserDetails {
     private String nome;
     private LocalDate dataDeNascimento;
     private String endereco;
+    @Column(unique = true)
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
