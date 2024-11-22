@@ -1,9 +1,11 @@
 package com.programacaoweb2024.controllers;
 
-import com.programacaoweb2024.DTOs.AulaDTO;
-import com.programacaoweb2024.entities.Aula;
+import com.programacaoweb2024.DTOs.AulaRequestDTO;
+import com.programacaoweb2024.DTOs.AulaResponseDTO;
 import com.programacaoweb2024.services.AulaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,22 +19,21 @@ public class AulaController {
     AulaService aulaService;
 
     @GetMapping
-    public ResponseEntity <List<AulaDTO>> listarAulas(){
-        List<AulaDTO> aulas = aulaService.listarAulas();
-        return ResponseEntity.ok().body(aulas);
+    public ResponseEntity <List<AulaResponseDTO>> listarAulas(){
+        return ResponseEntity.ok(aulaService.listarAulas());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Aula> buscarAulaPorId(@PathVariable Long id){
-        Aula obj = aulaService.buscarAulaPorId(id);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<AulaResponseDTO> buscarAulaPorId(@PathVariable Long id){
+        AulaResponseDTO aula = aulaService.buscarAulaPorId(id);
+        return ResponseEntity.ok(aula);
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<AulaDTO> cadastrarAula(@RequestBody AulaDTO aulaDTO){
+    public ResponseEntity<AulaResponseDTO> cadastrarAula(@RequestBody @Valid AulaRequestDTO aulaRequestDTO){
         try{
-            AulaDTO aulaCadastrada = aulaService.cadastrarAula(aulaDTO);
-            return ResponseEntity.ok().body(aulaCadastrada);
+            AulaResponseDTO aulaCadastrada = aulaService.cadastrarAula(aulaRequestDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(aulaCadastrada);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

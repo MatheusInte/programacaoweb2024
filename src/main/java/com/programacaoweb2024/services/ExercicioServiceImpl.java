@@ -1,8 +1,7 @@
 package com.programacaoweb2024.services;
 
-import com.programacaoweb2024.DTOs.AulaDTO;
-import com.programacaoweb2024.DTOs.ExercicioDTO;
-import com.programacaoweb2024.entities.Aula;
+import com.programacaoweb2024.DTOs.ExercicioRequestDTO;
+import com.programacaoweb2024.DTOs.ExercicioResponseDTO;
 import com.programacaoweb2024.entities.Exercicio;
 import com.programacaoweb2024.repositories.ExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,24 +18,30 @@ public class ExercicioServiceImpl implements ExercicioService{
     ExercicioRepository exercicioRepository;
 
     @Override
-    public List<ExercicioDTO> listarExercicios() {
-        return exercicioRepository.findAll().stream()
-                .map(this::converterParaDTO)
+    public List<ExercicioResponseDTO> listarExercicios() {
+        List<Exercicio> exercicios = exercicioRepository.findAll();
+        return exercicios.stream()
+                .map(ExercicioResponseDTO::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Exercicio buscarExercicioPorId(Long id) {
-        Optional<Exercicio> obj = exercicioRepository.findById(id);
-        return obj.orElse(null);
+    public ExercicioResponseDTO buscarExercicioPorId(Long id) {
+        Exercicio exercicio = exercicioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Exercício não Encontrado"));
+        return new ExercicioResponseDTO(exercicio);
     }
 
     @Override
-    public ExercicioDTO cadastrarExercicio(ExercicioDTO exercicioDTO) {
-        Exercicio exercicio = converterParaEntidade(exercicioDTO);
-        exercicio = exercicioRepository.save(exercicio);
+    public ExercicioResponseDTO cadastrarExercicio(ExercicioRequestDTO exercicioRequestDTO) {
+        Exercicio exercicio = new Exercicio();
+        exercicio.setNomeExercicio(exercicioRequestDTO.nomeExercicio());
+        exercicio.setEquipamento(exercicioRequestDTO.equipamento());
+        exercicio.setGrupamento(exercicioRequestDTO.grupamento());
 
-        return converterParaDTO(exercicio);
+        Exercicio exercicioSalvo = exercicioRepository.save(exercicio);
+
+        return new ExercicioResponseDTO(exercicioSalvo);
     }
 
     @Override
@@ -44,19 +49,4 @@ public class ExercicioServiceImpl implements ExercicioService{
         exercicioRepository.deleteById(id);
     }
 
-    private ExercicioDTO converterParaDTO(Exercicio exercicio){
-        return new ExercicioDTO(exercicio.getTipoDeExercicio(), exercicio.getExecucao(),
-                exercicio.getGrupamento(), exercicio.getAula());
-    }
-
-    private Exercicio converterParaEntidade(ExercicioDTO exercicioDTO){
-        Exercicio exercicio = new Exercicio();
-
-        exercicio.setTipoDeExercicio(exercicioDTO.getTipoDeExercicio());
-        exercicio.setExecucao(exercicioDTO.getExecucao());
-        exercicio.setGrupamento(exercicioDTO.getGrupamento());
-        exercicio.setAula(exercicioDTO.getAula());
-
-        return exercicio;
-    }
 }
