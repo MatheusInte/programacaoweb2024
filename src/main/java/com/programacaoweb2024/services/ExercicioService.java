@@ -11,4 +11,5 @@ public interface ExercicioService {
     public ExercicioResponseDTO buscarExercicioPorId(Long id);
     public ExercicioResponseDTO cadastrarExercicio(ExercicioRequestDTO exercicioRequestDTO);
     public void deletarExercicio(Long id);
+    public void deletarTodosExercicios();
 }

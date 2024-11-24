@@ -49,4 +49,14 @@ public class ExercicioController {
             throw new RuntimeException(e);
         }
     }
+
+    @DeleteMapping("/deletar")
+    public ResponseEntity<?> deletarTodosExercicios(){
+        try{
+            exercicioService.deletarTodosExercicios();
+            return ResponseEntity.noContent().build();
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
 }

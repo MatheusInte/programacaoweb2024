@@ -49,4 +49,9 @@ public class ExercicioServiceImpl implements ExercicioService{
         exercicioRepository.deleteById(id);
     }
 
+    @Override
+    public void deletarTodosExercicios(){
+        exercicioRepository.deleteAll();
+    }
+
 }
