@@ -2,6 +2,7 @@ package com.programacaoweb2024.services;
 
 import com.programacaoweb2024.DTOs.ExercicioRequestDTO;
 import com.programacaoweb2024.DTOs.ExercicioResponseDTO;
+import com.programacaoweb2024.DTOs.ExercicioUpdateDTO;
 import com.programacaoweb2024.entities.Exercicio;
 import com.programacaoweb2024.repositories.ExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,19 @@ public class ExercicioServiceImpl implements ExercicioService{
         return new ExercicioResponseDTO(exercicioSalvo);
     }
 
+    @Override
+    public ExercicioResponseDTO atualizarExercicio(ExercicioUpdateDTO exercicioUpdateDTO){
+        Exercicio exercicio = exercicioRepository.findById(exercicioUpdateDTO.id())
+                .orElseThrow(()-> new IllegalArgumentException("Exercicio de ID: " + exercicioUpdateDTO.id() + "não encontrado"));
+
+        exercicio.setNomeExercicio(exercicioUpdateDTO.nomeExercicio());
+        exercicio.setEquipamento(exercicioUpdateDTO.equipamento());
+        exercicio.setGrupamento(exercicioUpdateDTO.grupamento());
+
+        Exercicio exercicioAtualizado = exercicioRepository.save(exercicio);
+
+        return new ExercicioResponseDTO(exercicioAtualizado);
+    }
     @Override
     public void deletarExercicio(Long id) {
         exercicioRepository.deleteById(id);
