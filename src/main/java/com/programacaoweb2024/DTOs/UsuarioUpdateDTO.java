@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public record UsuarioUpdateDTO(
         String nome,
-        @JsonFormat
+
         LocalDate dataDeNascimento,
         String endereco,
         String email,

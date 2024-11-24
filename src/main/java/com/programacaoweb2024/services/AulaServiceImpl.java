@@ -1,9 +1,7 @@
 package com.programacaoweb2024.services;
 
 
-import com.programacaoweb2024.DTOs.AulaRequestDTO;
-import com.programacaoweb2024.DTOs.AulaResponseDTO;
-import com.programacaoweb2024.DTOs.UsuarioResponseDTO;
+import com.programacaoweb2024.DTOs.*;
 import com.programacaoweb2024.entities.Aula;
 import com.programacaoweb2024.entities.Usuario;
 import com.programacaoweb2024.repositories.AulaRepository;
@@ -54,6 +52,23 @@ public class AulaServiceImpl implements AulaService{
         return new AulaResponseDTO(aulaSalva);
     }
 
+    @Override
+    public AulaResponseDTO atualizarAula(AulaUpdateDTO aulaUpdateDTO){
+        Aula aula = aulaRepository.findById(aulaUpdateDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("Aula de ID: " + aulaUpdateDTO.id() + "Não encontrada"));
+
+        aula.setTitulo(aulaUpdateDTO.titulo());
+        aula.setDescricao(aulaUpdateDTO.descricao());
+        aula.setData(aulaUpdateDTO.data());
+        aula.setHorario(aulaUpdateDTO.horario());
+        aula.setTipoDeAula(aulaUpdateDTO.tipoDeAula());
+
+        Aula aulaAtualizado = aulaRepository.save(aula);
+
+        return new AulaResponseDTO(aulaAtualizado);
+
+
+    }
     @Override
     public void deletarAula(Long id) {
         aulaRepository.deleteById(id);
