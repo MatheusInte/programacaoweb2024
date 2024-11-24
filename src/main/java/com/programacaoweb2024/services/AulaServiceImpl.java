@@ -58,4 +58,9 @@ public class AulaServiceImpl implements AulaService{
     public void deletarAula(Long id) {
         aulaRepository.deleteById(id);
     }
+
+    @Override
+    public void deletarTodasAulas(){
+        aulaRepository.deleteAll();
+    }
 }

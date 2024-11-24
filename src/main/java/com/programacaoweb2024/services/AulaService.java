@@ -11,4 +11,5 @@ public interface AulaService {
     public AulaResponseDTO buscarAulaPorId(Long id);
     public  AulaResponseDTO cadastrarAula(AulaRequestDTO aulaRequestDTO);
     public void deletarAula(Long id);
+    public void deletarTodasAulas();
 }
