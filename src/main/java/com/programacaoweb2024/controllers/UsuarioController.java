@@ -50,4 +50,16 @@ public class UsuarioController {
             throw new RuntimeException(e);
         }
     }
+
+    @DeleteMapping("/deletar")
+    public ResponseEntity<?> deletarTodosUsuarios(){
+        try{
+            usuarioService.deletarTodosUsuarios();
+            return ResponseEntity.noContent().build();
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

@@ -54,4 +54,9 @@ public class UsuarioServiceImpl implements UsuarioService{
     public void deletarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    @Override
+    public void deletarTodosUsuarios(){
+        usuarioRepository.deleteAll();
+    }
 }

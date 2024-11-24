@@ -48,4 +48,14 @@ public class AulaController {
             throw new RuntimeException(e);
         }
     }
+
+    @DeleteMapping("/deletar")
+    public ResponseEntity<?> deletarTodasAulas(){
+        try{
+            aulaService.deletarTodasAulas();
+            return ResponseEntity.noContent().build();
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
 }
