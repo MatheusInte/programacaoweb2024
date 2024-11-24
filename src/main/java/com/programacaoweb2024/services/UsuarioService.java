@@ -10,4 +10,5 @@ public interface UsuarioService {
     public UsuarioResponseDTO buscarUsuarioPorId(Long id);
     public UsuarioResponseDTO cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO);
     public void deletarUsuario(Long id);
+    public void deletarTodosUsuarios();
 }
