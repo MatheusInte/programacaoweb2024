@@ -1,7 +1,6 @@
 package com.programacaoweb2024.controllers;
 
-import com.programacaoweb2024.DTOs.AulaRequestDTO;
-import com.programacaoweb2024.DTOs.AulaResponseDTO;
+import com.programacaoweb2024.DTOs.*;
 import com.programacaoweb2024.services.AulaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +36,12 @@ public class AulaController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AulaResponseDTO> atualizarUsuario(@RequestBody AulaUpdateDTO aulaUpdateDTO){
+        AulaResponseDTO aulaAtualizada = aulaService.atualizarAula(aulaUpdateDTO);
+        return ResponseEntity.ok(aulaAtualizada);
     }
 
     @DeleteMapping("/deletar/{id}")
