@@ -1,5 +1,6 @@
 package com.programacaoweb2024.entities;
 
+import com.programacaoweb2024.enums.UserRole;
 import com.programacaoweb2024.enums.UsuarioEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,11 +33,14 @@ public class Usuario implements UserDetails {
     private UsuarioEnum experiencia;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Aula> aulas;
+    private UserRole role;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_ALUNO"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_ALUNO"));
     }
 
     @Override
