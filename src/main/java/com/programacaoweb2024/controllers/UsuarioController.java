@@ -2,6 +2,7 @@ package com.programacaoweb2024.controllers;
 
 import com.programacaoweb2024.DTOs.UsuarioRequestDTO;
 import com.programacaoweb2024.DTOs.UsuarioResponseDTO;
+import com.programacaoweb2024.DTOs.UsuarioUpdateDTO;
 import com.programacaoweb2024.entities.Usuario;
 import com.programacaoweb2024.services.UsuarioService;
 import jakarta.validation.Valid;
@@ -39,6 +40,12 @@ public class UsuarioController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@RequestBody UsuarioUpdateDTO usuarioUpdateDTO){
+        UsuarioResponseDTO usuarioAtualizado = usuarioService.atualizarUsuario(usuarioUpdateDTO);
+        return ResponseEntity.ok(usuarioAtualizado);
     }
 
     @DeleteMapping("/deletar/{id}")

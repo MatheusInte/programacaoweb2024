@@ -2,6 +2,7 @@ package com.programacaoweb2024.services;
 
 import com.programacaoweb2024.DTOs.UsuarioRequestDTO;
 import com.programacaoweb2024.DTOs.UsuarioResponseDTO;
+import com.programacaoweb2024.DTOs.UsuarioUpdateDTO;
 import com.programacaoweb2024.entities.Usuario;
 import com.programacaoweb2024.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,22 @@ public class UsuarioServiceImpl implements UsuarioService{
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
 
         return new UsuarioResponseDTO(usuarioSalvo);
+    }
+
+    @Override
+    public UsuarioResponseDTO atualizarUsuario(UsuarioUpdateDTO usuarioUpdateDTO){
+        Usuario usuario = usuarioRepository.findByEmail(usuarioUpdateDTO.email())
+                .orElseThrow(() -> new IllegalArgumentException("Email não encontrado: " + usuarioUpdateDTO.email()));
+
+        usuario.setNome(usuarioUpdateDTO.nome());
+        usuario.setDataDeNascimento(usuarioUpdateDTO.dataDeNascimento());
+        usuario.setEndereco(usuarioUpdateDTO.endereco());
+        usuario.setEmail(usuarioUpdateDTO.email());
+        usuario.setExperiencia(usuarioUpdateDTO.experiencia());
+
+        Usuario usuarioAtualizado = usuarioRepository.save(usuario);
+
+        return new UsuarioResponseDTO(usuarioAtualizado);
     }
 
     @Override
