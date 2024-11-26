@@ -44,6 +44,12 @@ public class AulaController {
         return ResponseEntity.ok(aulaAtualizada);
     }
 
+    @PostMapping("/atribuir")
+    public ResponseEntity<UsuarioResponseDTO> atribuirAulas(@RequestBody AulaAssignDTO aulaAssignDTO){
+        UsuarioResponseDTO usuarioAtribuido = aulaService.atribuirAulas(aulaAssignDTO);
+        return ResponseEntity.ok(usuarioAtribuido);
+    }
+
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<?> deletarAula(@PathVariable Long id){
         try{

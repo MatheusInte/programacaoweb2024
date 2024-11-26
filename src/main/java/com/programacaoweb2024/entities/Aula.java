@@ -1,5 +1,6 @@
 package com.programacaoweb2024.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.programacaoweb2024.enums.AulaEnum;
 import jakarta.persistence.*;
@@ -30,5 +31,6 @@ public class Aula {
     private List<Exercicio> exercicios;
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonBackReference
     private Usuario usuario;
 }
