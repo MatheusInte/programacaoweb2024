@@ -1,9 +1,9 @@
 package com.programacaoweb2024.services;
 
-import com.programacaoweb2024.DTOs.ExercicioRequestDTO;
-import com.programacaoweb2024.DTOs.ExercicioResponseDTO;
-import com.programacaoweb2024.DTOs.ExercicioUpdateDTO;
+import com.programacaoweb2024.DTOs.*;
+import com.programacaoweb2024.entities.Aula;
 import com.programacaoweb2024.entities.Exercicio;
+import com.programacaoweb2024.repositories.AulaRepository;
 import com.programacaoweb2024.repositories.ExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,9 @@ public class ExercicioServiceImpl implements ExercicioService{
 
     @Autowired
     ExercicioRepository exercicioRepository;
+
+    @Autowired
+    AulaRepository aulaRepository;
 
     @Override
     public List<ExercicioResponseDTO> listarExercicios() {
@@ -58,6 +61,25 @@ public class ExercicioServiceImpl implements ExercicioService{
 
         return new ExercicioResponseDTO(exercicioAtualizado);
     }
+
+    @Override
+    public AulaResponseDTO atribuirExercicios(ExercicioAssignDTO exercicioAssignDTO){
+        Aula aula = aulaRepository.findById(exercicioAssignDTO.aulaId())
+                .orElseThrow(() -> new RuntimeException("Aula não encontrada"));
+        List<Exercicio> exercicios = exercicioRepository.findAllById(exercicioAssignDTO.exerciciosId());
+
+        if (exercicios.isEmpty()){
+            throw new RuntimeException("Exercicio não encontrado para o Id passado");
+        }
+        for (Exercicio exercicio : exercicios){
+            exercicio.setAula(aula);
+        }
+
+        exercicioRepository.saveAll(exercicios);
+
+        return new AulaResponseDTO(aula);
+    }
+
     @Override
     public void deletarExercicio(Long id) {
         exercicioRepository.deleteById(id);
