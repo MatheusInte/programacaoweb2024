@@ -14,7 +14,7 @@ public record UsuarioResponseDTO(
         String endereco,
         String email,
         UsuarioEnum experiencia,
-        List<Aula> aulas
+        List<AulaResponseDTO> aulas
 ) {
     public UsuarioResponseDTO( Usuario usuario){
         this(
@@ -24,7 +24,9 @@ public record UsuarioResponseDTO(
                 usuario.getEndereco(),
                 usuario.getEmail(),
                 usuario.getExperiencia(),
-                usuario.getAulas()
+                usuario.getAulas().stream()
+                        .map(AulaResponseDTO::new)
+                        .toList()
         );
     }
 }

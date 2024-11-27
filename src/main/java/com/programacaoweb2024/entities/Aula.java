@@ -29,10 +29,8 @@ public class Aula {
     @Enumerated(EnumType.STRING)
     private AulaEnum tipoDeAula;
     @OneToMany(mappedBy = "aula", cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Exercicio> exercicios;
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    @JsonBackReference
     private Usuario usuario;
 }

@@ -32,7 +32,6 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UsuarioEnum experiencia;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Aula> aulas;
 
     @Override
