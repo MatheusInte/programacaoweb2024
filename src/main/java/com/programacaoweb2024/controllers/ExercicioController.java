@@ -1,5 +1,7 @@
 package com.programacaoweb2024.controllers;
 
+import com.programacaoweb2024.DTOs.AulaResponseDTO;
+import com.programacaoweb2024.DTOs.ExercicioAssignDTO;
 import com.programacaoweb2024.DTOs.ExercicioRequestDTO;
 import com.programacaoweb2024.DTOs.ExercicioResponseDTO;
 import com.programacaoweb2024.entities.Exercicio;
@@ -48,6 +50,12 @@ public class ExercicioController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping("/atribuir")
+    public ResponseEntity<AulaResponseDTO> atribuirExercicios(@RequestBody ExercicioAssignDTO exercicioAssignDTO){
+        AulaResponseDTO aulaAtribuida = exercicioService.atribuirExercicios(exercicioAssignDTO);
+        return ResponseEntity.ok(aulaAtribuida);
     }
 
     @DeleteMapping("/deletar")

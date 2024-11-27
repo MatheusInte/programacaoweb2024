@@ -1,5 +1,6 @@
 package com.programacaoweb2024.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.programacaoweb2024.enums.UsuarioEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,8 +32,8 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UsuarioEnum experiencia;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Aula> aulas;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -41,6 +42,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return email;
     }
 }
