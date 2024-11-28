@@ -1,4 +1,6 @@
 package com.programacaoweb2024.DTOs;
 
-public record RegisterRequestDTO(String email, String password) {
+import com.programacaoweb2024.enums.UserRole;
+
+public record RegisterRequestDTO(String email, String password, UserRole role) {
 }
