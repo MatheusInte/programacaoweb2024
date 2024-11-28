@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+
                         .requestMatchers(HttpMethod.GET, "/api/usuarios").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/usuarios/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/usuarios/cadastrar").hasRole("ADMIN")
@@ -42,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/aulas").hasRole("ALUNO")
                         .requestMatchers(HttpMethod.GET, "/api/aulas/{id}").hasRole("ALUNO")
                         .requestMatchers(HttpMethod.POST, "/api/aulas/cadastrar").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/aulas/atribuir").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/aulas/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/aulas/deletar/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/aulas/deletar").hasRole("ADMIN")
@@ -49,6 +51,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/exercicios").hasRole("ALUNO")
                         .requestMatchers(HttpMethod.GET, "/api/exercicios/{id}").hasRole("ALUNO")
                         .requestMatchers(HttpMethod.POST, "/api/exercicios/cadastrar").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/exercicios/atribuir").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/exercicios/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/exercicios/deletar/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/exercicios/deletar").hasRole("ADMIN")
