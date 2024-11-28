@@ -1,6 +1,7 @@
 package com.programacaoweb2024.entities;
 
 import com.programacaoweb2024.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.programacaoweb2024.enums.UsuarioEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,6 @@ public class Usuario implements UserDetails {
     private List<Aula> aulas;
     private UserRole role;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
@@ -45,6 +45,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return email;
     }
 }

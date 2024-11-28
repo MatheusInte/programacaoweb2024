@@ -10,7 +10,6 @@ import java.time.LocalTime;
 public record AulaRequestDTO(
         @NotBlank(message = "Título é obrigatório")
         String titulo,
-        @NotBlank(message = "Descrição é obrigatória")
         String descricao,
         @NotNull(message = "Data é obrigatória")
         LocalDate data,

@@ -16,7 +16,7 @@ public record AulaResponseDTO(
         LocalDate data,
         LocalTime horario,
         AulaEnum tipoDeAula,
-        List<Exercicio> exercicios
+        List<ExercicioResponseDTO> exercicios
 ) {
     public AulaResponseDTO(Aula aula){
         this(
@@ -26,7 +26,9 @@ public record AulaResponseDTO(
                 aula.getData(),
                 aula.getHorario(),
                 aula.getTipoDeAula(),
-                aula.getExercicios()
+                aula.getExercicios().stream()
+                        .map(ExercicioResponseDTO::new)
+                        .toList()
         );
     }
 }

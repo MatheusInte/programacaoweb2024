@@ -4,7 +4,8 @@ public enum AulaEnum {
     CARDIO("Cardio"),
     LUTA("Luta"),
     PREPARACAO_CAMPEONATO("Preparacao para campeonato"),
-    COMPLETA("Completa");
+    COMPLETA("Completa"),
+    MUSCULACAO("Musculação");
 
     private final String tipoAula;
 

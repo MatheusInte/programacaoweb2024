@@ -1,6 +1,8 @@
 package com.programacaoweb2024.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.programacaoweb2024.enums.AulaEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
