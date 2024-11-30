@@ -61,11 +61,19 @@ public class AuthController {
             Usuario novoUsuario = new Usuario();
             novoUsuario.setPassword(passwordEncoder.encode(body.password()));
             novoUsuario.setEmail(body.email());
+            novoUsuario.setNome(body.nome());
+            novoUsuario.setExperiencia(body.experiencia());
             novoUsuario.setRole(body.role());
+            novoUsuario.setEndereco(body.endereco());
+            novoUsuario.setDataDeNascimento(body.dataDeNascimento());
             this.usuarioRepository.save(novoUsuario);
 
             String token = this.tokenService.generateToken(novoUsuario);
-            return ResponseEntity.ok(new RegisterResponseDTO(novoUsuario.getEmail(), token));
+            return ResponseEntity.ok(new RegisterResponseDTO(novoUsuario.getNome(),
+                    novoUsuario.getDataDeNascimento(),
+                    novoUsuario.getExperiencia(),
+                    novoUsuario.getRole(),
+                    token));
         }
         return ResponseEntity.badRequest().build();
     }
