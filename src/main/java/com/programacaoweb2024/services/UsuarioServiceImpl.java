@@ -1,11 +1,13 @@
 package com.programacaoweb2024.services;
 
+import com.programacaoweb2024.DTOs.RegisterRequestDTO;
 import com.programacaoweb2024.DTOs.UsuarioRequestDTO;
 import com.programacaoweb2024.DTOs.UsuarioResponseDTO;
 import com.programacaoweb2024.DTOs.UsuarioUpdateDTO;
 import com.programacaoweb2024.entities.Usuario;
 import com.programacaoweb2024.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public List<UsuarioResponseDTO> listarUsuarios() {
@@ -65,6 +70,25 @@ public class UsuarioServiceImpl implements UsuarioService{
         Usuario usuarioAtualizado = usuarioRepository.save(usuario);
 
         return new UsuarioResponseDTO(usuarioAtualizado);
+    }
+
+    public Usuario registrarUsuario(RegisterRequestDTO request) {
+        // Verificar se o email já está em uso
+        if (usuarioRepository.existsByEmail(request.email())) {
+            throw new RuntimeException("Email já está em uso.");
+        }
+
+        // Criar novo usuário
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(request.nome());
+        novoUsuario.setDataDeNascimento(request.dataDeNascimento());
+        novoUsuario.setExperiencia(request.experiencia());
+        novoUsuario.setEmail(request.email());
+        novoUsuario.setPassword(passwordEncoder.encode(request.password()));
+        novoUsuario.setRole(request.role());
+
+        // Salvar no banco
+        return usuarioRepository.save(novoUsuario);
     }
 
     @Override
