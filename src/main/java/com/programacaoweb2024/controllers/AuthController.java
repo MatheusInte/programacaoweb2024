@@ -5,6 +5,7 @@ import com.programacaoweb2024.DTOs.LoginResponseDTO;
 import com.programacaoweb2024.DTOs.RegisterRequestDTO;
 import com.programacaoweb2024.DTOs.RegisterResponseDTO;
 import com.programacaoweb2024.entities.Usuario;
+import com.programacaoweb2024.exceptions.*;
 import com.programacaoweb2024.repositories.UsuarioRepository;
 import com.programacaoweb2024.security.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,6 +39,12 @@ public class AuthController {
     @Operation(description = "Login no Sistema")
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body){
+        if(body.email() == null || body.email().isBlank()){
+            throw new LoginEmailException();
+        }
+        if(body.password() == null || body.password().isBlank()){
+            throw new LoginPasswordException();
+        }
 
         var usernamePassword = new UsernamePasswordAuthenticationToken(body.email(), body.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
@@ -59,6 +66,28 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body){
         Optional<Usuario> usuario = this.usuarioRepository.findByEmail(body.email());
+
+        if(body.nome() == null || body.nome().isBlank()){
+            throw new RegisterNomeException();
+        }
+        if(body.dataDeNascimento() == null || body.dataDeNascimento().toString().isBlank()){
+            throw new RegisterDataException();
+        }
+        if(body.endereco() == null || body.endereco().isBlank()){
+            throw new RegisterEnderecoException();
+        }
+        if(body.email() == null || body.email().isBlank()){
+            throw new RegisterEmailException();
+        }
+        if(body.password() == null || body.password().isBlank()){
+            throw new RegisterPasswordException();
+        }
+        if(body.experiencia() == null || body.experiencia().toString().isBlank()){
+            throw new RegisterExperienciaException();
+        }
+        if(body.role() == null || body.experiencia().toString().isBlank()){
+            throw new RegisterRoleException();
+        }
 
         if(usuario.isEmpty()){
             Usuario novoUsuario = new Usuario();

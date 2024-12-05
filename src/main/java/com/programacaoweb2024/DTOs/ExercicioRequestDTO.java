@@ -6,10 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record ExercicioRequestDTO(
-        @NotBlank(message = "Nome do Exercicio é obrigatório")
+        //@NotBlank(message = "Nome do Exercicio é obrigatório")
         String nomeExercicio,
-        @NotNull(message = "Equipamento é obrigatório")
+        //@NotNull(message = "Equipamento é obrigatório")
         String equipamento,
-        @NotNull(message = "Grupamento é obrigatória")
+        //@NotNull(message = "Grupamento é obrigatória")
         ExercicioEnum grupamento
 ) { }

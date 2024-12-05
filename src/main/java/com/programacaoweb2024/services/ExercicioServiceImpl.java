@@ -3,13 +3,16 @@ package com.programacaoweb2024.services;
 import com.programacaoweb2024.DTOs.*;
 import com.programacaoweb2024.entities.Aula;
 import com.programacaoweb2024.entities.Exercicio;
+import com.programacaoweb2024.exceptions.ExercicioExerciciosException;
+import com.programacaoweb2024.exceptions.ExercicioGrupamentoException;
+import com.programacaoweb2024.exceptions.ExercicioNomeException;
+import com.programacaoweb2024.exceptions.ExercicioNotFoundException;
 import com.programacaoweb2024.repositories.AulaRepository;
 import com.programacaoweb2024.repositories.ExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +41,17 @@ public class ExercicioServiceImpl implements ExercicioService{
 
     @Override
     public ExercicioResponseDTO cadastrarExercicio(ExercicioRequestDTO exercicioRequestDTO) {
+
+        if(exercicioRequestDTO.nomeExercicio() == null || exercicioRequestDTO.nomeExercicio().isBlank()){
+            throw new ExercicioNomeException();
+        }
+        if(exercicioRequestDTO.equipamento() == null || exercicioRequestDTO.equipamento().isBlank()){
+            throw new ExercicioExerciciosException();
+        }
+        if(exercicioRequestDTO.grupamento() == null || exercicioRequestDTO.grupamento().toString().isBlank()){
+            throw new ExercicioGrupamentoException();
+        }
+
         Exercicio exercicio = new Exercicio();
         exercicio.setNomeExercicio(exercicioRequestDTO.nomeExercicio());
         exercicio.setEquipamento(exercicioRequestDTO.equipamento());
@@ -52,6 +66,16 @@ public class ExercicioServiceImpl implements ExercicioService{
     public ExercicioResponseDTO atualizarExercicio(ExercicioUpdateDTO exercicioUpdateDTO){
         Exercicio exercicio = exercicioRepository.findById(exercicioUpdateDTO.id())
                 .orElseThrow(()-> new IllegalArgumentException("Exercicio de ID: " + exercicioUpdateDTO.id() + "não encontrado"));
+
+        if(exercicioUpdateDTO.nomeExercicio() == null || exercicioUpdateDTO.nomeExercicio().isBlank()){
+            throw new ExercicioNomeException();
+        }
+        if(exercicioUpdateDTO.equipamento() == null || exercicioUpdateDTO.equipamento().isBlank()){
+            throw new ExercicioExerciciosException();
+        }
+        if(exercicioUpdateDTO.grupamento() == null || exercicioUpdateDTO.grupamento().toString().isBlank()){
+            throw new ExercicioGrupamentoException();
+        }
 
         exercicio.setNomeExercicio(exercicioUpdateDTO.nomeExercicio());
         exercicio.setEquipamento(exercicioUpdateDTO.equipamento());
@@ -69,7 +93,7 @@ public class ExercicioServiceImpl implements ExercicioService{
         List<Exercicio> exercicios = exercicioRepository.findAllById(exercicioAssignDTO.exerciciosId());
 
         if (exercicios.isEmpty()){
-            throw new RuntimeException("Exercicio não encontrado para o Id passado");
+            throw new ExercicioNotFoundException();
         }
         for (Exercicio exercicio : exercicios){
             exercicio.setAula(aula);

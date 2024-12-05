@@ -5,6 +5,7 @@ import com.programacaoweb2024.DTOs.UsuarioRequestDTO;
 import com.programacaoweb2024.DTOs.UsuarioResponseDTO;
 import com.programacaoweb2024.DTOs.UsuarioUpdateDTO;
 import com.programacaoweb2024.entities.Usuario;
+import com.programacaoweb2024.exceptions.*;
 import com.programacaoweb2024.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,6 +42,24 @@ public class UsuarioServiceImpl implements UsuarioService{
     public UsuarioResponseDTO cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
         if (usuarioRepository.existsByemail(usuarioRequestDTO.email())){
             throw new IllegalArgumentException("O email já está em uso");
+        }
+        if(usuarioRequestDTO.nome() == null || usuarioRequestDTO.nome().isBlank()){
+            throw new UsuarioNomeException();
+        }
+        if(usuarioRequestDTO.dataDeNascimento() == null || usuarioRequestDTO.dataDeNascimento().toString().isBlank()){
+            throw new UsuarioDataException();
+        }
+        if(usuarioRequestDTO.endereco() == null || usuarioRequestDTO.endereco().isBlank()){
+            throw new UsuarioEnderecoException();
+        }
+        if(usuarioRequestDTO.email() == null || usuarioRequestDTO.email().isBlank()){
+            throw new UsuarioEmailException();
+        }
+        if(usuarioRequestDTO.password() == null || usuarioRequestDTO.password().isBlank()){
+            throw new UsuarioPasswordException();
+        }
+        if(usuarioRequestDTO.experiencia() == null || usuarioRequestDTO.experiencia().toString().isBlank()){
+            throw new UsuarioExperienciaException();
         }
 
         Usuario usuario = new Usuario();
