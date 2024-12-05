@@ -30,12 +30,8 @@ public class AulaController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<AulaResponseDTO> cadastrarAula(@RequestBody @Valid AulaRequestDTO aulaRequestDTO){
-        try{
             AulaResponseDTO aulaCadastrada = aulaService.cadastrarAula(aulaRequestDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(aulaCadastrada);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @PutMapping("/{id}")

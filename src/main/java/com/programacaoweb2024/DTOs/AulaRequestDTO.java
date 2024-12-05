@@ -8,14 +8,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record AulaRequestDTO(
-        @NotBlank(message = "Título é obrigatório")
+        //@NotBlank(message = "Título é obrigatório")
         String titulo,
         String descricao,
-        @NotNull(message = "Data é obrigatória")
+        //@NotNull(message = "Data é obrigatória")
         LocalDate data,
-        @NotNull(message = "Horario é obrigatório")
+        //@NotNull(message = "Horario é obrigatório")
         LocalTime horario,
-        @NotNull(message = "Tipo de Aula é obrigatório")
+        //@NotNull(message = "Tipo de Aula é obrigatório")
         AulaEnum tipoDeAula
 ) {
 }

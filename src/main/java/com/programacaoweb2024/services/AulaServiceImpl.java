@@ -6,6 +6,7 @@ import com.programacaoweb2024.entities.Aula;
 import com.programacaoweb2024.entities.Usuario;
 import com.programacaoweb2024.repositories.AulaRepository;
 import com.programacaoweb2024.repositories.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,15 +34,31 @@ public class AulaServiceImpl implements AulaService{
     @Override
     public AulaResponseDTO buscarAulaPorId(Long id) {
         Aula aula = aulaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Aula não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Aula com ID " + id + " não encontrado"));
         return new AulaResponseDTO(aula);
     }
 
     @Override
     public AulaResponseDTO cadastrarAula(AulaRequestDTO aulaRequestDTO) {
         LocalTime horario = aulaRequestDTO.horario();
+        if (aulaRequestDTO.titulo() == null || aulaRequestDTO.titulo().isBlank()) {
+            throw new IllegalArgumentException("O nome da aula é obrigatório.");
+        }
         if (horario.isBefore(LocalTime.of(6,0)) || horario.isAfter(LocalTime.of(21,0))){
             throw new IllegalArgumentException("O horário da aula deve ser entre 06:00 e 21:00");
+        }
+        if (aulaRequestDTO.data() == null || aulaRequestDTO.data().toString().isBlank()) {
+            throw new IllegalArgumentException("A data da aula é obrigatória.");
+        }
+        if (aulaRequestDTO.tipoDeAula().toString().isBlank()) {
+            throw new IllegalArgumentException("O tipo da aula é obrigatório.");
+        }
+        if (aulaRequestDTO.horario().toString().isBlank()) {
+            throw new IllegalArgumentException("O horário da aula é obrigatório.");
+        }
+
+        if (aulaRequestDTO.descricao() == null || aulaRequestDTO.descricao().isBlank()) {
+            throw new IllegalArgumentException("A descrição da aula é obrigatória.");
         }
 
         Aula aula = new Aula();
