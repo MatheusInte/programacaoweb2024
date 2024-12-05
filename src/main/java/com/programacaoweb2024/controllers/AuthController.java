@@ -7,6 +7,7 @@ import com.programacaoweb2024.DTOs.RegisterResponseDTO;
 import com.programacaoweb2024.entities.Usuario;
 import com.programacaoweb2024.repositories.UsuarioRepository;
 import com.programacaoweb2024.security.TokenService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,7 @@ public class AuthController {
     @Autowired
     private final AuthenticationManager authenticationManager;
 
+    @Operation(description = "Login no Sistema")
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body){
 
@@ -53,6 +55,7 @@ public class AuthController {
         //return ResponseEntity.badRequest().build();
     }
 
+    @Operation(description = "Registro no Sistema")
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body){
         Optional<Usuario> usuario = this.usuarioRepository.findByEmail(body.email());
