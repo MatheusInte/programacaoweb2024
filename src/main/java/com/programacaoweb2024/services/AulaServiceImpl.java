@@ -4,6 +4,7 @@ package com.programacaoweb2024.services;
 import com.programacaoweb2024.DTOs.*;
 import com.programacaoweb2024.entities.Aula;
 import com.programacaoweb2024.entities.Usuario;
+import com.programacaoweb2024.exceptions.*;
 import com.programacaoweb2024.repositories.AulaRepository;
 import com.programacaoweb2024.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -42,23 +43,23 @@ public class AulaServiceImpl implements AulaService{
     public AulaResponseDTO cadastrarAula(AulaRequestDTO aulaRequestDTO) {
         LocalTime horario = aulaRequestDTO.horario();
         if (aulaRequestDTO.titulo() == null || aulaRequestDTO.titulo().isBlank()) {
-            throw new IllegalArgumentException("O nome da aula é obrigatório.");
+            throw new AulaTituloException();
         }
         if (horario.isBefore(LocalTime.of(6,0)) || horario.isAfter(LocalTime.of(21,0))){
-            throw new IllegalArgumentException("O horário da aula deve ser entre 06:00 e 21:00");
+            throw new AulaHorarioException();
         }
         if (aulaRequestDTO.data() == null || aulaRequestDTO.data().toString().isBlank()) {
-            throw new IllegalArgumentException("A data da aula é obrigatória.");
+            throw new AulaDataException();
         }
         if (aulaRequestDTO.tipoDeAula().toString().isBlank()) {
-            throw new IllegalArgumentException("O tipo da aula é obrigatório.");
+            throw new AulaTipoDeAulaException();
         }
         if (aulaRequestDTO.horario().toString().isBlank()) {
-            throw new IllegalArgumentException("O horário da aula é obrigatório.");
+            throw new AulaHorarioObrigatorioException();
         }
 
         if (aulaRequestDTO.descricao() == null || aulaRequestDTO.descricao().isBlank()) {
-            throw new IllegalArgumentException("A descrição da aula é obrigatória.");
+            throw new AulaDescricaoException();
         }
 
         Aula aula = new Aula();
@@ -78,6 +79,26 @@ public class AulaServiceImpl implements AulaService{
         Aula aula = aulaRepository.findById(aulaUpdateDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("Aula de ID: " + aulaUpdateDTO.id() + "Não encontrada"));
 
+        LocalTime horario = aulaUpdateDTO.horario();
+        if (aulaUpdateDTO.titulo() == null || aulaUpdateDTO.titulo().isBlank()) {
+            throw new AulaTituloException();
+        }
+        if (horario.isBefore(LocalTime.of(6,0)) || horario.isAfter(LocalTime.of(21,0))){
+            throw new AulaHorarioException();
+        }
+        if (aulaUpdateDTO.data() == null || aulaUpdateDTO.data().toString().isBlank()) {
+            throw new AulaDataException();
+        }
+        if (aulaUpdateDTO.tipoDeAula().toString().isBlank()) {
+            throw new AulaTipoDeAulaException();
+        }
+        if (aulaUpdateDTO.horario().toString().isBlank()) {
+            throw new AulaHorarioObrigatorioException();
+        }
+
+        if (aulaUpdateDTO.descricao() == null || aulaUpdateDTO.descricao().isBlank()) {
+            throw new AulaDescricaoException();
+        }
         aula.setTitulo(aulaUpdateDTO.titulo());
         aula.setDescricao(aulaUpdateDTO.descricao());
         aula.setData(aulaUpdateDTO.data());
